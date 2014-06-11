@@ -1,37 +1,35 @@
-#KEYSTONE CLIENT API
-from keystoneclient.v2_0 import client
+#CREDS
 havana_user = "admin"
 havana_pass = "625a7fb62b5543d2"
 havana_tenant = "admin"
 havana_auth_url = "http://192.168.10.204:5000/v2.0/"
-havana = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
 
-havana_endpoints_list = havana.endpoints.list()
-havana_roles_list = havana.roles.list()
-havana_services_list = havana.services.list()
-havana_tenants_list = havana.tenants.list()
-havana_users_list = havana.users.list()
+#KEYSTONE CLIENT API
+from keystoneclient.v2_0 import client
+keystone = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+
+endpoints_list = keystone.endpoints.list()
+roles_list = keystone.roles.list()
+services_list = keystone.services.list()
+tenants_list = keystone.tenants.list()
+users_list = keystone.users.list()
 
 print "==================================="
-print havana_endpoints_list
-print havana_roles_list
-print havana_services_list
-print havana_tenants_list
-print havana_users_list
+print endpoints_list
+print roles_list
+print services_list
+print tenants_list
+print users_list
 
+#STUBBED OUT JUST IN CASE
 ##GLANCE CLIENT API
 ##from glanceclient import Client
 ##glance = Client('1', endpoint=OS_IMAGE_ENDPOINT, token=OS_AUTH_TOKEN)
 ##image = glance.images.create(name="My Test Image")
 ## print image.status
 
-
 #NEUTRON CLIENT API
 from neutronclient.v2_0 import client
-vana_user = "admin"
-havana_pass = "625a7fb62b5543d2"
-havana_tenant = "admin"
-havana_auth_url = "http://192.168.10.204:5000/v2.0/"
 havana = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
 
 havana_ports_list = havana.list_ports()
@@ -42,10 +40,6 @@ print havana_ports_list
 
 #NOVA CLIENT API
 from novaclient.v1_1 import client
-havana_user = "admin"
-havana_pass = "625a7fb62b5543d2"
-havana_tenant = "admin"
-havana_auth_url = "http://192.168.10.204:5000/v2.0/"
 havana = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="compute")
 
 havana_aggregates = havana.aggregates.list()
@@ -92,10 +86,6 @@ print havana_servers
 ##print havana_volumes
 
 from cinderclient.v1 import client
-havana_user = "admin"
-havana_pass = "625a7fb62b5543d2"
-havana_tenant = "admin"
-havana_auth_url = "http://192.168.10.204:5000/v2.0/"
 havana = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="volume")
 
 ##havana_volume_backups = havana.volume_backups.list()
