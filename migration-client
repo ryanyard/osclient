@@ -1,3 +1,24 @@
+#KEYSTONE CLIENT API
+from keystoneclient.v2_0 import client
+havana_user = "admin"
+havana_pass = "625a7fb62b5543d2"
+havana_tenant = "admin"
+havana_auth_url = "http://192.168.10.204:5000/v2.0/"
+havana = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+
+havana_endpoints_list = havana.endpoints.list()
+havana_roles_list = havana.roles.list()
+havana_services_list = havana.services.list()
+havana_tenants_list = havana.tenants.list()
+havana_users_list = havana.users.list()
+
+print havana_endpoints_list
+print havana_roles_list
+print havana_services_list
+print havana_tenants_list
+print havana_users_list
+
+
 #NOVA CLIENT API
 from novaclient.v1_1 import client
 havana_user = "admin"
