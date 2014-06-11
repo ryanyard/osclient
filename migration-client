@@ -17,7 +17,6 @@ nova = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, s
 from neutronclient.v2_0 import client
 neutron = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
 
-
 endpoints_list = keystone.endpoints.list()
 roles_list = keystone.roles.list()
 services_list = keystone.services.list()
@@ -38,10 +37,25 @@ print users_list
 ##image = glance.images.create(name="My Test Image")
 ## print image.status
 
+quota_list = neutron.list_quotas()
 ports_list = neutron.list_ports()
+network_list = neutron.list_networks()
+subnet_list = neutron.list_subnets()
+routers_list = neutron.list_routers()
+floatingips_list = neutron.list_floatingips()
+security_groups_list = neutron.list_security_groups()
+security_group_rules_list = neutron.list_security_group_rules()
+
 
 print "=====**NEUTRON**=============================="
+print quota_list
 print ports_list
+print network_list
+print subnet_list
+print routers_list
+print floatingips_list
+print security_groups_list
+print security_group_rules_list
 
 aggregates_list = nova.aggregates.list()
 availability_zones_list = nova.availability_zones.list()
@@ -86,7 +100,6 @@ print "=====**CINDER**=============================="
 print volume_snapshots_list
 print volume_types_list
 print volumes_list
-
 
 
 ##ICEHOUSE##
