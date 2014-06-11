@@ -7,6 +7,16 @@ havana_auth_url = "http://192.168.10.204:5000/v2.0/"
 #KEYSTONE CLIENT API
 from keystoneclient.v2_0 import client
 keystone = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+#CINDER CLIENT API
+from cinderclient.v1 import client
+cinder = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="volume")
+#NOVA CLIENT API
+from novaclient.v1_1 import client
+nova = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="compute")
+#NEUTRON CLIENT API
+from neutronclient.v2_0 import client
+neutron = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+
 
 endpoints_list = keystone.endpoints.list()
 roles_list = keystone.roles.list()
@@ -14,7 +24,7 @@ services_list = keystone.services.list()
 tenants_list = keystone.tenants.list()
 users_list = keystone.users.list()
 
-print "==================================="
+print "======**KEYSTONE**============================="
 print endpoints_list
 print roles_list
 print services_list
@@ -28,82 +38,58 @@ print users_list
 ##image = glance.images.create(name="My Test Image")
 ## print image.status
 
-#NEUTRON CLIENT API
-from neutronclient.v2_0 import client
-havana = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+ports_list = neutron.list_ports()
 
-havana_ports_list = havana.list_ports()
+print "=====**NEUTRON**=============================="
+print ports_list
 
-
-print "==================================="
-print havana_ports_list
-
-#NOVA CLIENT API
-from novaclient.v1_1 import client
-havana = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="compute")
-
-havana_aggregates = havana.aggregates.list()
-havana_availability_zones = havana.availability_zones.list()
-havana_flavors = havana.flavors.list()
-havana_floating_ip_pools = havana.floating_ip_pools.list()
-havana_floating_ips = havana.floating_ips.list()
-havana_images = havana.images.list()
-havana_keypairs = havana.keypairs.list()
-havana_networks = havana.networks.list()
-havana_security_groups = havana.security_groups.list()
-havana_servers = havana.servers.list()
+aggregates_list = nova.aggregates.list()
+availability_zones_list = nova.availability_zones.list()
+flavors_list = nova.flavors.list()
+floating_ip_pools_list = nova.floating_ip_pools.list()
+floating_ips_list = nova.floating_ips.list()
+images_list = nova.images.list()
+keypairs_list = nova.keypairs.list()
+networks_list = nova.networks.list()
+security_groups_list = nova.security_groups.list()
+servers_list = nova.servers.list()
 
 ##Throws Exception
 ##havana_security_groups_rules = havana.security_groups_rules.list()
-
-##Handle with Cinder
-##havana_volume_snapshots = havana.volume_snapshots.list()
-##havana_volume_types = havana.volume_types.list()
-##havana_volumes = havana.volumes.list()
 
 ##Need Tenant-ID
 ##havana_quotas = havana.quotas.defaults(tenant_id)
 ##print havana_quotas
 
-print "==================================="
-print havana_aggregates
-print havana_availability_zones
-print havana_flavors
-print havana_floating_ip_pools
-print havana_floating_ips
-print havana_images 
-print havana_keypairs
-print havana_networks
-print havana_security_groups
-print havana_servers
+print "=====**NOVA**=============================="
+print aggregates_list
+print availability_zones_list
+print flavors_list
+print floating_ip_pools_list
+print floating_ips_list
+print images_list
+print keypairs_list
+print networks_list
+print security_groups_list
+print servers_list
 
-##Throws Exception
-##print havana_security_groups_rules
-
-##Handle with Cinder
-##print havana_volume_snapshots
-##print havana_volume_types
-##print havana_volumes
-
-from cinderclient.v1 import client
-havana = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="volume")
-
+#NOT IMPLEMENTED IN THE CLIENT
 ##havana_volume_backups = havana.volume_backups.list()
 ##havana_volume_encryption_types = havana.encryption_types.list()
 ##havana_volume_transfers = havana.volume_transfers.list()
-havana_volume_snapshots = havana.volume_snapshots.list()
-havana_volume_types = havana.volume_types.list()
-havana_volumes = havana.volumes.list()
 
-##print havana_volume_backups
-##print havana_volume_encryption_types
-##print havana_volume_transfers
+volume_snapshots_list = cinder.volume_snapshots.list()
+volume_types_list = cinder.volume_types.list()
+volumes_list = cinder.volumes.list()
 
-print "==================================="
-print havana_volume_snapshots
-print havana_volume_types
-print havana_volumes
+print "=====**CINDER**=============================="
+print volume_snapshots_list
+print volume_types_list
+print volumes_list
 
+
+
+##ICEHOUSE##
 #NOVA CLIENT API
 #from novaclient.v1_1 import client
 
