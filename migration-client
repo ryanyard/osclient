@@ -12,12 +12,33 @@ havana_services_list = havana.services.list()
 havana_tenants_list = havana.tenants.list()
 havana_users_list = havana.users.list()
 
+print "==================================="
 print havana_endpoints_list
 print havana_roles_list
 print havana_services_list
 print havana_tenants_list
 print havana_users_list
 
+##GLANCE CLIENT API
+##from glanceclient import Client
+##glance = Client('1', endpoint=OS_IMAGE_ENDPOINT, token=OS_AUTH_TOKEN)
+##image = glance.images.create(name="My Test Image")
+## print image.status
+
+
+#NEUTRON CLIENT API
+from neutronclient.v2_0 import client
+vana_user = "admin"
+havana_pass = "625a7fb62b5543d2"
+havana_tenant = "admin"
+havana_auth_url = "http://192.168.10.204:5000/v2.0/"
+havana = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+
+havana_ports_list = havana.list_ports()
+
+
+print "==================================="
+print havana_ports_list
 
 #NOVA CLIENT API
 from novaclient.v1_1 import client
@@ -50,6 +71,7 @@ havana_servers = havana.servers.list()
 ##havana_quotas = havana.quotas.defaults(tenant_id)
 ##print havana_quotas
 
+print "==================================="
 print havana_aggregates
 print havana_availability_zones
 print havana_flavors
@@ -78,15 +100,17 @@ havana = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url,
 
 ##havana_volume_backups = havana.volume_backups.list()
 ##havana_volume_encryption_types = havana.encryption_types.list()
-havana_volume_snapshots = havana.volume_snapshots.list()
 ##havana_volume_transfers = havana.volume_transfers.list()
+havana_volume_snapshots = havana.volume_snapshots.list()
 havana_volume_types = havana.volume_types.list()
 havana_volumes = havana.volumes.list()
 
 ##print havana_volume_backups
 ##print havana_volume_encryption_types
-print havana_volume_snapshots
 ##print havana_volume_transfers
+
+print "==================================="
+print havana_volume_snapshots
 print havana_volume_types
 print havana_volumes
 
