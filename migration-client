@@ -1,0 +1,87 @@
+#NOVA CLIENT API
+from novaclient.v1_1 import client
+havana_user = "admin"
+havana_pass = "625a7fb62b5543d2"
+havana_tenant = "admin"
+havana_auth_url = "http://192.168.10.204:5000/v2.0/"
+havana = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="compute")
+
+havana_aggregates = havana.aggregates.list()
+havana_availability_zones = havana.availability_zones.list()
+havana_flavors = havana.flavors.list()
+havana_floating_ip_pools = havana.floating_ip_pools.list()
+havana_floating_ips = havana.floating_ips.list()
+havana_images = havana.images.list()
+havana_keypairs = havana.keypairs.list()
+havana_networks = havana.networks.list()
+havana_security_groups = havana.security_groups.list()
+havana_servers = havana.servers.list()
+
+##Throws Exception
+##havana_security_groups_rules = havana.security_groups_rules.list()
+
+##Handle with Cinder
+##havana_volume_snapshots = havana.volume_snapshots.list()
+##havana_volume_types = havana.volume_types.list()
+##havana_volumes = havana.volumes.list()
+
+##Need Tenant-ID
+##havana_quotas = havana.quotas.defaults(tenant_id)
+##print havana_quotas
+
+print havana_aggregates
+print havana_availability_zones
+print havana_flavors
+print havana_floating_ip_pools
+print havana_floating_ips
+print havana_images 
+print havana_keypairs
+print havana_networks
+print havana_security_groups
+print havana_servers
+
+##Throws Exception
+##print havana_security_groups_rules
+
+##Handle with Cinder
+##print havana_volume_snapshots
+##print havana_volume_types
+##print havana_volumes
+
+from cinderclient.v1 import client
+havana_user = "admin"
+havana_pass = "625a7fb62b5543d2"
+havana_tenant = "admin"
+havana_auth_url = "http://192.168.10.204:5000/v2.0/"
+havana = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="volume")
+
+##havana_volume_backups = havana.volume_backups.list()
+##havana_volume_encryption_types = havana.encryption_types.list()
+havana_volume_snapshots = havana.volume_snapshots.list()
+##havana_volume_transfers = havana.volume_transfers.list()
+havana_volume_types = havana.volume_types.list()
+havana_volumes = havana.volumes.list()
+
+##print havana_volume_backups
+##print havana_volume_encryption_types
+print havana_volume_snapshots
+##print havana_volume_transfers
+print havana_volume_types
+print havana_volumes
+
+#NOVA CLIENT API
+#from novaclient.v1_1 import client
+
+#icehouse_user = "admin"
+#icehouse_pass = "da06a74ee81f4a66"
+#icehouse_tenant = "admin"
+#icehouse_auth_url = "http://192.168.10.203:35357/v2.0/"
+
+#icehouse = client.Client(icehouse_user, icehouse_pass, icehouse_tenant, icehouse_auth_url, service_type="compute")
+#icehouse_flavors = icehouse.flavors.list()
+#icehouse_servers = icehouse.servers.list()
+#icehouse_keypairs = icehouse.keypairs.list()
+
+#print icehouse_flavors
+#print icehouse_servers
+#print icehouse_keypairs
