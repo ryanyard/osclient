@@ -1,0 +1,64 @@
+#CREDS
+havana_user = "admin"
+havana_pass = "625a7fb62b5543d2"
+havana_tenant = "admin"
+havana_auth_url = "http://192.168.10.204:5000/v2.0/"
+
+icehouse_user = "admin"
+icehouse_pass = "da06a74ee81f4a66"
+icehouse_tenant = "admin"
+icehouse_auth_url = "http://192.168.10.203:35357/v2.0/"
+
+##HAVANA##
+#KEYSTONE CLIENT API
+from keystoneclient.v2_0 import client
+hkeystone = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+#CINDER CLIENT API
+from cinderclient.v1 import client
+hcinder = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="volume")
+#NOVA CLIENT API
+from novaclient.v1_1 import client
+hnova = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="compute")
+inova = client.Client(icehouse_user, icehouse_pass, icehouse_tenant, icehouse_auth_url, service_type="compute")
+#NEUTRON CLIENT API
+from neutronclient.v2_0 import client
+hneutron = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+
+#flavors_list = nova.flavors.list(detailed=True)
+#print flavors_list
+
+flavorid = 6
+flavor_get = hnova.flavors.get(flavorid)
+print flavor_get.name
+print flavor_get.ram
+print flavor_get.vcpus
+print flavor_get.disk
+print flavor_get.id
+print flavor_get.swap
+print flavor_get.ephemeral
+print flavor_get.rxtx_factor
+print flavor_get.is_public
+
+flavor_delete = inova.flavors.delete(6)
+flavor_create = inova.flavors.create(flavor_get.name, 
+				     flavor_get.ram, 
+				     flavor_get.vcpus, 
+				     flavor_get.disk, 
+				     flavor_get.id, 
+				     ephemeral=flavor_get.ephemeral, 
+				     swap=0, 
+				     rxtx_factor=flavor_get.rxtx_factor, 
+				     is_public=flavor_get.is_public)
+
+
+flavorid = 6
+flavor_get = inova.flavors.get(flavorid)
+print flavor_get.name
+print flavor_get.ram
+print flavor_get.vcpus
+print flavor_get.disk
+print flavor_get.id
+print flavor_get.swap
+print flavor_get.ephemeral
+print flavor_get.rxtx_factor
+print flavor_get.is_public
