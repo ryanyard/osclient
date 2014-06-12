@@ -1,0 +1,51 @@
+#CREDS
+havana_user = "admin"
+havana_pass = "625a7fb62b5543d2"
+havana_tenant = "admin"
+havana_auth_url = "http://192.168.10.204:5000/v2.0/"
+
+icehouse_user = "admin"
+icehouse_pass = "da06a74ee81f4a66"
+icehouse_tenant = "admin"
+icehouse_auth_url = "http://192.168.10.203:35357/v2.0/"
+
+##HAVANA##
+#KEYSTONE CLIENT API
+from keystoneclient.v2_0 import client
+hkeystone = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+ikeystone = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+#CINDER CLIENT API
+from cinderclient.v1 import client
+hcinder = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="volume")
+#NOVA CLIENT API
+from novaclient.v1_1 import client
+hnova = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="compute")
+inova = client.Client(icehouse_user, icehouse_pass, icehouse_tenant, icehouse_auth_url, service_type="compute")
+#NEUTRON CLIENT API
+from neutronclient.v2_0 import client
+hneutron = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+
+
+endpoints_list = hkeystone.endpoints.list()
+roles_list = hkeystone.roles.list()
+services_list = hkeystone.services.list()
+tenants_list = hkeystone.tenants.list()
+users_list = hkeystone.users.list()
+
+#print roles_list
+#roles_get = hkeystone.roles.get()
+#print roles_get
+
+user = "f7de47069b334b7ab0626176a00b590f"
+users_get = hkeystone.users.get(user)
+print users_get
+print users_get.name
+print users_get.password
+print users_get.tenantId
+print users_get.email
+print users_get.enabled
+
+#users_create = ikeystone.users.create(users_get)
+
+#users_list = ikeystone.users.list()
+#print users_list
