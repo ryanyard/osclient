@@ -25,38 +25,30 @@ inova = client.Client(icehouse_user, icehouse_pass, icehouse_tenant, icehouse_au
 from neutronclient.v2_0 import client
 hneutron = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
 
-
 #endpoints_list = hkeystone.endpoints.list()
 #roles_list = hkeystone.roles.list()
 #services_list = hkeystone.services.list()
 #users_list = hkeystone.users.list()
 
-#roles_get = hkeystone.roles.get()
-#print roles_get
+tenant_name = "george"
 
-#tenants_list = hkeystone.tenants.list()
-#print tenants_list
-#fred = "7ad9a658b9a34c389e9327e89b5432ef"
+tenants_list = hkeystone.tenants.list()
+get_tenantid_by_name = [x for x in tenants_list if x.name==tenant_name][0]
 
-#tenants_get = hkeystone.tenants.get(fred)
-#print tenants_get()
-#print tenants_get.id
-#print tenants_get.name
-#print tenants_get.description
-#print tenants_get.enabled
-
-#print get_tenantid_by_name
-#tenants_delete = ikeystone.tenants.delete("fred")
-#tenants_create = ikeystone.tenants.create(tenants_get.name, tenants_get.description, tenants_get.enabled)
+tenants_create = ikeystone.tenants.create(tenants_get.name, tenants_get.description, tenants_get.enabled)
 
 tenants_list = ikeystone.tenants.list()
-get_tenantid_by_name = [x for x in tenants_list if x.name=='fred'][0]
+get_tenantid_by_name = [x for x in tenants_list if x.name==tenant_name][0]
 
 user = "f7de47069b334b7ab0626176a00b590f"
 password = "test"
 
 users_get = hkeystone.users.get(user)
-
 users_create = ikeystone.users.create(name=users_get.name, password=password, tenant_id=get_tenantid_by_name.id, email=users_get.email, enabled=users_get.enabled)
 users_list = ikeystone.users.list()
 print users_list
+
+#roles_get = hkeystone.roles.get()
+#print roles_get
+
+
