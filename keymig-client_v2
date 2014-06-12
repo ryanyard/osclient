@@ -1,0 +1,87 @@
+#!/usr/bin/python
+#CREDS
+havana_user = "admin"
+havana_pass = "625a7fb62b5543d2"
+havana_tenant = "admin"
+havana_auth_url = "http://192.168.10.204:5000/v2.0/"
+
+icehouse_user = "admin"
+icehouse_pass = "da06a74ee81f4a66"
+icehouse_tenant = "admin"
+icehouse_auth_url = "http://192.168.10.203:35357/v2.0/"
+
+##HAVANA##
+#KEYSTONE CLIENT API
+from keystoneclient.v2_0 import client
+hkeystone = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+ikeystone = client.Client(username=icehouse_user, password=icehouse_pass, tenant_name=icehouse_tenant, auth_url=icehouse_auth_url)
+#CINDER CLIENT API
+from cinderclient.v1 import client
+hcinder = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="volume")
+#NOVA CLIENT API
+from novaclient.v1_1 import client
+hnova = client.Client(havana_user, havana_pass, havana_tenant, havana_auth_url, service_type="compute")
+inova = client.Client(icehouse_user, icehouse_pass, icehouse_tenant, icehouse_auth_url, service_type="compute")
+#NEUTRON CLIENT API
+from neutronclient.v2_0 import client
+hneutron = client.Client(username=havana_user, password=havana_pass, tenant_name=havana_tenant, auth_url=havana_auth_url)
+
+#endpoints_list = hkeystone.endpoints.list()
+#roles_list = hkeystone.roles.list()
+#services_list = hkeystone.services.list()
+#users_list = hkeystone.users.list()
+
+tenant_name = "george"
+user_name = "bob"
+password = "test"
+role_name = "hank"
+
+def tenant_list(cloud):
+	if cloud=="havana":
+		tenants_list = hkeystone.tenants.list()
+		get_tenantid_by_name = [x for x in tenants_list if x.name==tenant_name][0]
+
+	if cloud=="icehouse":
+		tenants_list = ikeystone.tenants.list()
+		get_tenantid_by_name = [x for x in tenants_list if x.name==tenant_name][0]
+
+def user_list(cloud):
+	if cloud=="havana":
+		users_list = hkeystone.users.list()
+		get_userid_by_name = [x for x in users_list if x.name==user_name][0]
+
+	if cloud=="icehouse":
+		users_list = ikeystone.users.list()
+		get_userid_by_name = [x for x in users_list if x.name==user_name][0]
+
+cloud = "havana"
+tenant_list(cloud)
+user_list(cloud)
+tenants_create = ikeystone.tenants.create(get_tenantid_by_name.name, 
+					  get_tenantid_by_name.description, 
+					  get_tenantid_by_name.enabled)
+
+users_role = hkeystone.roles.roles_for_user(get_userid_by_name.id, 
+					    get_tenantid_by_name.id)
+get_roleid_by_name = [x for x in users_role if x.name==role_name][0]
+
+cloud = "icehouse"
+tenant_list(cloud)
+users_create = ikeystone.users.create(name=get_userid_by_name.name, 
+				      password=password, 
+				      tenant_id=get_tenantid_by_name.id, 
+				      email=get_userid_by_name.email, 
+				      enabled=get_userid_by_name.enabled)
+
+user_list(cloud)
+role_create = ikeystone.roles.create(get_roleid_by_name.name)
+role_add = ikeystone.roles.add_user_role(get_userid_by_name.id,
+					 role_create,
+					 get_tenantid_by_name.id)
+##
+#May want to rethink using tenenat.add_user
+##
+
+##Cleanup##
+#tenant_delete = ikeystone.tenants.delete(get_tenantid_by_name.name)
+#user_delete = ikeystone.users.delete(get_userid_by_name.name)
