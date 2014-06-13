@@ -36,56 +36,46 @@ user_name = "bob"
 password = "test"
 role_name = "hank"
 
-def tenant_list(cloud):
-	if cloud=="havana":
+		#Get Havana Tenant
 		tenants_list = hkeystone.tenants.list()
 		get_tenantid_by_name = [x for x in tenants_list if x.name==tenant_name][0]
 	
+		#Create Havana Tenant in Icehouse
 		tenants_create = ikeystone.tenants.create(get_tenantid_by_name.name, 
                                           		  get_tenantid_by_name.description, 
                                           		  get_tenantid_by_name.enabled)
 
-	if cloud=="icehouse":
+		#Get Havana User
+		users_list = hkeystone.users.list()
+		get_userid_by_name = [x for x in users_list if x.name==user_name][0]
+
+		#Get Icehouse Tenant ID
 		tenants_list = ikeystone.tenants.list()
 		get_tenantid_by_name = [x for x in tenants_list if x.name==tenant_name][0]
 
+		#Create Havana User in Icehouse with Icehouse Tenant ID
 		users_create = ikeystone.users.create(name=get_userid_by_name.name,
                                       		      password=password,
                                       		      tenant_id=get_tenantid_by_name.id,
                                       		      email=get_userid_by_name.email,
                                       		      enabled=get_userid_by_name.enabled)
 
-def user_list(cloud):
-	if cloud=="havana":
-		users_list = hkeystone.users.list()
-		get_userid_by_name = [x for x in users_list if x.name==user_name][0]
-
+		#Get Havana User Role
 		users_role = hkeystone.roles.roles_for_user(get_userid_by_name.id,
-                                            		    tenant_list().get_tenantid_by_name.id)
-
+                                            		    get_tenantid_by_name.id)
 		get_roleid_by_name = [x for x in users_role if x.name==role_name][0]
 
-	if cloud=="icehouse":
+		#Get Icehouse User
 		users_list = ikeystone.users.list()
 		get_userid_by_name = [x for x in users_list if x.name==user_name][0]
 
+		#Create Havana Role in Icehouse
 		role_create = ikeystone.roles.create(get_roleid_by_name.name)
 
+		#Add Role to Icehouse User
 		role_add = ikeystone.roles.add_user_role(get_userid_by_name.id,
                                          		 role_create,
                                          		 get_tenantid_by_name.id)
-
-cloud = "havana"
-tenant_list(cloud)
-user_list(cloud)
-
-cloud = "icehouse"
-tenant_list(cloud)
-user_list(cloud)
-
-##
-#May want to rethink using tenenat.add_user
-##
 
 ##Cleanup##
 #tenant_delete = ikeystone.tenants.delete(get_tenantid_by_name.name)
